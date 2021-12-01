@@ -6,10 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using static todo_list.api.Setup.SwaggerConfig;
 
 namespace todo_list.api.Setup
@@ -19,6 +15,7 @@ namespace todo_list.api.Setup
         public static void WebApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddApiVersioning(opt =>
             {

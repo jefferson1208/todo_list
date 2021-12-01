@@ -33,6 +33,8 @@ namespace todo_list.api
             services.AddControllers();
             services.WebApiConfig(Configuration);
             services.AddSwaggerConfiguration();
+
+            services.RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
