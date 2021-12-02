@@ -34,10 +34,10 @@ namespace todo_list.api.V1
 
         }
 
-        [HttpDelete("remove")]
-        public async Task<IActionResult> RemoveTodo([FromQuery] string id)
+        [HttpDelete("remove/{id:Guid}")]
+        public async Task<IActionResult> RemoveTodo(Guid id)
         {
-            await _todoService.RemoveTodo(Guid.Parse(id));
+            await _todoService.RemoveTodo(id);
             
             return CustomResponse();
 
@@ -64,10 +64,10 @@ namespace todo_list.api.V1
 
         }
 
-        [HttpGet("todo-by-id")]
-        public async Task<IActionResult> GetTodoById([FromQuery] string id)
+        [HttpGet("todo-by-id/{id:Guid}")]
+        public async Task<IActionResult> GetTodoById(Guid id)
         {
-            var todo = await _todoService.GetTodoById(Guid.Parse(id));
+            var todo = await _todoService.GetTodoById(id);
 
             return CustomResponse(todo);
 
