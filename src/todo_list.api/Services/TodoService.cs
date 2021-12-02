@@ -18,7 +18,7 @@ namespace todo_list.api.Services
         }
         public async Task<Todo> AddTodo(Todo todo)
         {
-            if (!Validate(new TodoValidations(), todo)) return null;
+            if (!Validate(new TodoValidations(), todo, 400)) return null;
 
             _repository.Add(todo);
 
@@ -26,7 +26,7 @@ namespace todo_list.api.Services
 
             if (!result)
             {
-                Notify("Error when creating the activity!");
+                Notify("Error when creating the activity!", 400);
                 return null;
             }
 
@@ -37,34 +37,38 @@ namespace todo_list.api.Services
         {
             var existingTodo = await _repository.GetById(id);
 
-            if (existingTodo is null)
+            if (existingTodo is null || !existingTodo.Active)
             {
-                Notify("No activity found");
+                Notify("No activity found", 404);
                 return;
             }
 
-            _repository.Remove(existingTodo);
+            //remoção conceitual apenas
+            existingTodo.DisableActivity();
 
             var result = await _repository.UnitOfWork.Commit();
 
             if (!result)
             {
-                Notify("Error in activity exclusion");
+                Notify("Error in activity exclusion", 400);
             }
         }
 
         public async Task UpdateTodo(Todo todo)
         {
-            if (!Validate(new TodoValidations(true), todo)) return;
+            if (!Validate(new TodoValidations(true), todo, 400)) return;
 
             var existingTodo = await _repository.GetById(todo.Id);
 
+            if (existingTodo.Title == todo.Title && existingTodo.Done == todo.Done) return;
+
             if (existingTodo is null)
             {
-                Notify("No activity found");
+                Notify("No activity found", 404);
                 return;
             }
 
+            //aqui o ideal seria ter uma chamada para alterar cada informação
             existingTodo.ChangeTittle(todo.Title);
             existingTodo.ChangeActivityStatus(todo.Done);
 
@@ -72,7 +76,7 @@ namespace todo_list.api.Services
 
             if (!result)
             {
-                Notify("Error when updating the activity");
+                Notify("Error when updating the activity", 400);
             }
         }
 

@@ -53,7 +53,7 @@ namespace todo_list.api.V1
             return CustomResponse(todo);
         }
 
-        [HttpGet("todos")]
+        [HttpGet("all-todos")]
         public async Task<IActionResult> GetTodos()
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);

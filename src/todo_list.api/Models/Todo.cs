@@ -6,11 +6,12 @@
         {
             Title = title;
             Done = done;
+            Active = true;
         }
 
         public string Title { get; private set; }
         public bool Done { get; private set; }
-
+        public bool Active { get; private set; }
         public void ChangeTittle(string title)
         {
             Title = title;
@@ -21,6 +22,10 @@
             Done = status;
         }
 
+        public void DisableActivity()
+        {
+            Active = false;
+        }
         protected Todo() { }
     }
 }

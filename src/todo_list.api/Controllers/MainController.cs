@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
+using System.Net;
 using todo_list.api.Models;
 using todo_list.api.Notifications;
 
@@ -30,20 +31,16 @@ namespace todo_list.api.Controllers
                 });
             }
 
-            return BadRequest(new
-            {
-                success = false,
-                errors = _notifier.GetNotifications().Select(n => n.Message)
-            });
+            return GenerateActionResult(_notifier.GetNotifications().Select(n => n.CodeError).FirstOrDefault());
         }
 
-        protected ActionResult CustomResponse(ModelStateDictionary modelState)
+        protected ActionResult CustomResponse(ModelStateDictionary modelState, int codError)
         {
-            if (!modelState.IsValid) NotifyInvalidModel(modelState);
+            if (!modelState.IsValid) NotifyInvalidModel(modelState, codError);
             return CustomResponse();
         }
 
-        protected void NotifyInvalidModel(ModelStateDictionary modelState)
+        protected void NotifyInvalidModel(ModelStateDictionary modelState, int codError)
         {
             var errors = modelState.Values.SelectMany(e => e.Errors);
 
@@ -51,13 +48,39 @@ namespace todo_list.api.Controllers
             {
                 var errorMessage = error.Exception == null ? error.ErrorMessage : error.Exception.Message;
 
-                NotifyError(errorMessage);
+                NotifyError(errorMessage, codError);
             }
         }
 
-        protected void NotifyError(string message)
+        protected void NotifyError(string message, int codError)
         {
-            _notifier.Handle(new Notification(message));
+            _notifier.Handle(new Notification(message, codError));
+        }
+
+        private ActionResult GenerateActionResult(int statusCode)
+        {
+            ActionResult actionResult;
+
+            switch ((HttpStatusCode)statusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    actionResult = NotFound(new
+                    {
+                        success = false,
+                        errors = _notifier.GetNotifications().Select(n => n.Message)
+                    });
+                    break;
+               
+                default:
+                    actionResult = BadRequest(new
+                    {
+                        success = false,
+                        errors = _notifier.GetNotifications().Select(n => n.Message)
+                    });
+                    break;
+            }
+
+            return actionResult;
         }
     }
 }

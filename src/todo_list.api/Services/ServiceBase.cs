@@ -14,26 +14,26 @@ namespace todo_list.api.Services
             _notifier = notifier;
         }
 
-        protected void Notify(ValidationResult validationResult)
+        protected void Notify(ValidationResult validationResult, int codError)
         {
             foreach (var error in validationResult.Errors)
             {
-                Notify(error.ErrorMessage);
+                Notify(error.ErrorMessage, codError);
             }
         }
 
-        protected void Notify(string mensagem)
+        protected void Notify(string mensagem, int codError)
         {
-            _notifier.Handle(new Notification(mensagem));
+            _notifier.Handle(new Notification(mensagem, codError));
         }
 
-        protected bool Validate<TV, TE>(TV validation, TE entity) where TV : AbstractValidator<TE> where TE : Entity
+        protected bool Validate<TV, TE>(TV validation, TE entity, int codError) where TV : AbstractValidator<TE> where TE : Entity
         {
             var validator = validation.Validate(entity);
 
             if (validator.IsValid) return true;
 
-            Notify(validator);
+            Notify(validator, codError);
 
             return false;
         }
