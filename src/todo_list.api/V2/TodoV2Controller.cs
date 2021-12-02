@@ -5,7 +5,7 @@ using todo_list.api.Notifications;
 namespace todo_list.api.V2
 {
     [ApiVersion("2.0")]
-    [Route("api/v{version:apiVersion}/teste")]
+    [Route("api/v{version:apiVersion}/todo")]
     public class TodoV2Controller : MainController
     {
         public TodoV2Controller(INotifier notifier) : base(notifier)
@@ -13,10 +13,10 @@ namespace todo_list.api.V2
 
         }
 
-        [HttpGet]
-        public string Valor()
+        [HttpGet("test")]
+        public string Version_Two()
         {
-            return "Versão 2";
+            return "Version 2";
         }
     }
 }

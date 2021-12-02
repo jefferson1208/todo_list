@@ -64,7 +64,7 @@ namespace todo_list.api.V1
 
         }
 
-        [HttpGet("todo")]
+        [HttpGet("todo-by-id")]
         public async Task<IActionResult> GetTodoById([FromQuery] string id)
         {
             var todo = await _todoService.GetTodoById(Guid.Parse(id));

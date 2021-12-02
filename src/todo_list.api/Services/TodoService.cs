@@ -26,7 +26,7 @@ namespace todo_list.api.Services
 
             if (!result)
             {
-                Notify("");
+                Notify("Error when creating the activity!");
                 return null;
             }
 
@@ -49,7 +49,7 @@ namespace todo_list.api.Services
 
             if (!result)
             {
-                Notify("");
+                Notify("Error in activity exclusion");
             }
         }
 
@@ -65,14 +65,14 @@ namespace todo_list.api.Services
                 return;
             }
 
-            _repository.Remove(existingTodo);
-            _repository.Add(todo);
+            existingTodo.ChangeTittle(todo.Title);
+            existingTodo.ChangeActivityStatus(todo.Done);
 
             var result = await _repository.UnitOfWork.Commit();
 
             if (!result)
             {
-                Notify("");
+                Notify("Error when updating the activity");
             }
         }
 

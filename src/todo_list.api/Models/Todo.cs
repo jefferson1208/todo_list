@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace todo_list.api.Models
+﻿namespace todo_list.api.Models
 {
     public class Todo : Entity
     {
@@ -12,6 +10,16 @@ namespace todo_list.api.Models
 
         public string Title { get; private set; }
         public bool Done { get; private set; }
+
+        public void ChangeTittle(string title)
+        {
+            Title = title;
+        }
+
+        public void ChangeActivityStatus(bool status)
+        {
+            Done = status;
+        }
 
         protected Todo() { }
     }

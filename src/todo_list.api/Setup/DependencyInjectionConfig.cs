@@ -15,6 +15,7 @@ namespace todo_list.api.Setup
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<ITodoService, TodoService>();
 
+            //Singleton apenas para este contexto de teste
             services.AddSingleton<TodoContext>();
 
             services.AddScoped<INotifier, Notifier>();
