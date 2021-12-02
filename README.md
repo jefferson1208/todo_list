@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## About
+### About
 
 ```bash
 Framework .net5
@@ -12,7 +12,7 @@ Unit tests and Integration
 
 ```
 
-## Packages
+### Packages
 
 ```bash
 AutoMapper.Extensions.Microsoft.DependencyInjection
@@ -26,7 +26,7 @@ Swashbuckle.AspNetCore.SwaggerUI
 
 ```
 
-## 1 - Create a task
+### 1 - Create a task
 ```csharp
 {
   "title": "string",
@@ -34,7 +34,7 @@ Swashbuckle.AspNetCore.SwaggerUI
 }
 ```
 Title: Minimum 10 characters and maximum 50
-## 2 - Update a task
+### 2 - Update a task
 Enter the id generated when creating the task and change the title and/or done fields
 
 ```csharp
@@ -45,20 +45,20 @@ Enter the id generated when creating the task and change the title and/or done f
 }
 ```
 
-## 3 - Remove a task
+### 3 - Remove a task
 
 Route: api/v1/todo/remove/6605e119-481c-4116-90bc-3d98219f88a1
 <br/>Enter the id of the task you want to remove
 
-## 4 - Get all tasks or by id
+### 4 - Get all tasks
 
 Route: api/v1/todo/all-todos
 
-## 5 - Get task by id
+### 5 - Get task by id
 
 Route: api/v1/todo/todo-by-id/6605e119-481c-4116-90bc-3d98219f88a1
 
-## 3 - Technologies
+### 3 - Technologies
 <div style="display: inline_block"><br>
   <img align="center" alt="Jeferson-Netcore" height="30" width="40" src="https://github.com/devicons/devicon/blob/master/icons/dotnetcore/dotnetcore-original.svg">
   <img align="center" alt="Jeferson-Csharp" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg">
